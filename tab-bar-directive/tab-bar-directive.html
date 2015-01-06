@@ -1,4 +1,6 @@
 <ul class="nav nav-tabs sub" role="tablist">
-    <li ng-repeat='item in items' ng-class="{active:selected.item == item}"><a ng-click="selected.item = item">{{item}}</a></li>
+    <li ng-repeat='item in items' ng-class="{active:$parent.selected_item === item}">
+    	<a ng-click="$parent.selected_item = item">{{item}}</a>
+    </li>
 </ul>
-<div ng-transclude></div>
+<div ng-transclude style="height:100% !important;"></div>
