@@ -2,5 +2,6 @@
     <li ng-repeat='item in items' ng-class="{active:$parent.selected_item === item}">
     	<a ng-click="$parent.selected_item = item">{{item}}</a>
     </li>
+    <li ng-if="dynamic"><a>+</a></li>
 </ul>
 <div ng-transclude style="height:100% !important;"></div>
