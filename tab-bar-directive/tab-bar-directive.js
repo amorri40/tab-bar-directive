@@ -23,10 +23,10 @@ define(['angular'], function(angular) {
                     transclude: true,
                     link: function(scope, elem, attrs, ctrl, transclude) {
                         transclude(scope.$parent, function(clone, scope) {
-                            element.append(clone);
+                            elem.append(clone);
                           });
                     },
-                    scope:{items:'=', selected:'='}
+                    scope:{items:'=', selected:'=', dynamic:'='}
                 }
             }
         ]) // end directive
@@ -34,8 +34,13 @@ define(['angular'], function(angular) {
             function($scope) {
                 console.log($scope.items, $scope.selected)
                 $scope.selected_item=$scope.selected
+                
 
                 $scope.isSelected = function(name) {
+                    if ($scope.items.indexOf(name) === -1) {
+                        $scope.items.push(name);
+                        console.log(name,' not in items');
+                    }
                     return $scope.selected_item === name;
                 }
 
