@@ -5,6 +5,11 @@
 
 // Main purpose of this file:
 //   - Really simple tab bar to remove duplicate code
+var bu2 = document.querySelector("script[src$='tab-bar-directive.js']");
+var currentScriptPath = bu2.src;
+var baseUrl = currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1);
+console.log(currentScriptPath);
+
 define(['angular'], function(angular) {
     var directive_dash_name = "tab-bar-directive";
     var directive_camel_case = "tabBarDirective";
@@ -13,23 +18,27 @@ define(['angular'], function(angular) {
             function($compile) {
                 return {
                     restrict: 'E',
-                    templateUrl: './js/directives/' + directive_dash_name + '/' + directive_dash_name + '.html',
+                    templateUrl: currentScriptPath.replace('directive.js', 'directive.html'),//'./js/directives/' + directive_dash_name + '/' + directive_dash_name + '.html',
                     controller: directive_camel_case + 'Controller',
                     transclude: true,
-                    link: function(scope, elem, attrs) {}
+                    link: function(scope, elem, attrs, ctrl, transclude) {
+                        transclude(scope.$parent, function(clone, scope) {
+                            element.append(clone);
+                          });
+                    },
+                    scope:{items:'=', selected:'='}
                 }
             }
         ]) // end directive
         .controller(directive_camel_case + 'Controller', ['$scope',
             function($scope) {
-                $scope.init = function(items, _default) {
-                    //This function is sort of private constructor for controller, call using ng-init directive
-                    $scope.items = items;
-                    $scope.selected = {
-                        item: _default
-                    };
+                console.log($scope.items, $scope.selected)
+                $scope.selected_item=$scope.selected
 
-                };
+                $scope.isSelected = function(name) {
+                    return $scope.selected_item === name;
+                }
+
             }
         ]); //end controller
 
