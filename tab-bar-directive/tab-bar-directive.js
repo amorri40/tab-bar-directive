@@ -8,7 +8,7 @@
 var bu2 = document.querySelector("script[src$='tab-bar-directive.js']");
 var currentScriptPath = bu2.src;
 var baseUrl = currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1);
-console.log(currentScriptPath);
+// console.log(currentScriptPath);
 
 define(['angular'], function(angular) {
     var directive_dash_name = "tab-bar-directive";
@@ -22,27 +22,50 @@ define(['angular'], function(angular) {
                     controller: directive_camel_case + 'Controller',
                     transclude: true,
                     link: function(scope, elem, attrs, ctrl, transclude) {
-                        transclude(scope.$parent, function(clone, scope) {
-                            elem.append(clone);
-                          });
+                        // transclude(scope.$parent, function(clone, scope) {
+                        //     elem.append(clone);
+                        //   });
                     },
-                    scope:{items:'=', selected:'=', dynamic:'='}
+                    scope:{items:'=', selected:'=', dynamic:'=',oncreate:'=', onshow:'='}
                 }
             }
         ]) // end directive
-        .controller(directive_camel_case + 'Controller', ['$scope',
-            function($scope) {
+        .controller(directive_camel_case + 'Controller', ['$scope', '$timeout',
+            function($scope, $timeout) {
                 console.log($scope.items, $scope.selected)
-                $scope.selected_item=$scope.selected
-                
+
+                if (typeof $scope.selected !== 'undefined')
+                {
+                    $scope.selected_item=$scope.selected
+                }
+                else {
+                    $scope.selected_item=$scope.items[0];
+                }
+                if (typeof $scope.onshow === 'undefined') {
+                    $scope.onshow= function(item) {
+                        console.log('default onshow')
+                    }
+                }
+
+                $scope.setSelected = function(name) {
+                    $scope.selected_item=name;
+                    $scope.timeoutForLoad = $timeout(function() {
+                        $scope.onshow(name);
+                    },100);
+                    // $scope.onshow(name);
+                }
+
 
                 $scope.isSelected = function(name) {
                     if ($scope.items.indexOf(name) === -1) {
                         $scope.items.push(name);
+                        $scope.setSelected(name);
                         console.log(name,' not in items');
                     }
                     return $scope.selected_item === name;
                 }
+                $scope.tabbarDirective = {available:true};
+                $scope.tabbarDirective.isSelected = $scope.isSelected;
 
             }
         ]); //end controller
