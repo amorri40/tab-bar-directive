@@ -1,0 +1,19 @@
+/*
+ Tabbar spacing
+*/
+.tabbar-space-container {
+    display:table;
+    width:100%;
+    height:100%;
+}
+.tabbar-any-space
+{
+    width: 100%;
+    display:table-row;
+
+}
+.tabbar-any-space+ div.tabbae-rest-of-space
+{
+    height:100%;  
+    display:table-row;
+}
