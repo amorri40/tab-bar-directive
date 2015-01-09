@@ -1,7 +1,10 @@
+
+<div style="height:10% !important;">
 <ul class="nav nav-tabs sub" role="tablist">
     <li ng-repeat='item in items' ng-class="{active:$parent.selected_item === item}">
-    	<a ng-click="$parent.selected_item = item">{{item}}</a>
+    	<a ng-click="$parent.selected_item = item; onshow(item)">{{item}}</a>
     </li>
-    <li ng-if="dynamic"><a>+</a></li>
+    <li ng-if="dynamic"><a ng-click='oncreate()'>+</a></li>
 </ul>
-<div ng-transclude style="height:100% !important;"></div>
+</div>
+<div ng-transclude style="height:90% !important;"></div>
