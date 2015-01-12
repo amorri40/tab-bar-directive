@@ -26,7 +26,7 @@ define(['angular'], function(angular) {
                         //     elem.append(clone);
                         //   });
                     },
-                    scope:{items:'=', selected:'=', dynamic:'=',oncreate:'=', onshow:'='}
+                    scope:{items:'=', selected:'=', dynamic:'=',oncreate:'=', onshow:'=', notabs:'='}
                 }
             }
         ]) // end directive
