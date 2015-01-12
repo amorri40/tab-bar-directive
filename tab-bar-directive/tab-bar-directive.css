@@ -17,3 +17,11 @@
     height:100%;  
     display:table-row;
 }
+
+.tabbar-absolutely-full {
+ 	bottom: 0;
+ 	top: 0;
+ 	right: 0;
+ 	left:0px;
+ 	position: absolute;
+}
