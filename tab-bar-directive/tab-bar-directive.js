@@ -8,7 +8,6 @@
 var bu2 = document.querySelector("script[src$='tab-bar-directive.js']");
 var currentScriptPath = bu2.src;
 var baseUrl = currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1);
-// console.log(currentScriptPath);
 
 define(['angular'], function(angular) {
     var directive_dash_name = "tab-bar-directive";
@@ -26,13 +25,17 @@ define(['angular'], function(angular) {
                         //     elem.append(clone);
                         //   });
                     },
-                    scope:{items:'=', selected:'=', dynamic:'=',oncreate:'=', onshow:'=', notabs:'='}
+                    scope:{items:'=', selected:'=', dynamic:'=',oncreate:'=', onshow:'=', notabs:'@'}
                 }
             }
         ]) // end directive
         .controller(directive_camel_case + 'Controller', ['$scope', '$timeout',
             function($scope, $timeout) {
                 console.log($scope.items, $scope.selected)
+
+                if (typeof $scope.notabs === 'undefined') {
+                    $scope.notabs=false;
+                }
 
                 if (typeof $scope.selected !== 'undefined')
                 {
